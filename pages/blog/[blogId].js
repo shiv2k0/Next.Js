@@ -14,7 +14,14 @@ function Blog({title,description}){
 
 export default Blog
 
-export async function getServerSideProps(){
+export async function getStaticPaths(){
+    return{
+        paths: [{params: {blogId: '1'}}],
+        fallback: false,
+    }
+}
+
+export async function getStaticProps(){
     return{
         props:{
             title: 'Article',
@@ -23,3 +30,7 @@ export async function getServerSideProps(){
         },
     }
 }
+
+// Error: Error for page /blog/[blogId]: pages with `getServerSideProps` can not be exported.
+
+// Error: getStaticPaths is required for dynamic SSG pages and is missing for '/blog/[blogId]'.
