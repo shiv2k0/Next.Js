@@ -6,22 +6,32 @@ function Blog({title,description}){
             <Head>
                 <title>{title}</title>
                 <meta name='description' content={description}/>
-                {/* Head Component can be used with Dynamic pages also */}
+                
             </Head>
+            <h1 className='content'> Env User {process.env.DB_USER} Password {process.env.DB_PASSWORD} 
+            {/* This is provided in Next.js to prevent accidental exposure of User Data */}
+
+            Env Analytics {process.env.NEXT_PUBLIC_ANALYTICS_ID}
+            </h1>
         </>
     )
 }
 
 export default Blog
 
-export async function getStaticPaths(){
-    return{
-        paths: [{params: {blogId: '1'}}],
-        fallback: false,
-    }
-}
+// export async function getStaticPaths(){
+//     return{
+//         paths: [{params: {blogId: '1'}}],
+//         fallback: false,
+//     }
+// }
 
-export async function getStaticProps(){
+export async function getServerSideProps(){
+    const user= process.env.DB_USER
+    const password= process.env.DB_PASSWORD
+
+    console.log(`Connecting to database with username ${user} and password ${password}`)
+
     return{
         props:{
             title: 'Article',
